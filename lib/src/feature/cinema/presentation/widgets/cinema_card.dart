@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ra_movie/src/core/extensions/context_extension.dart';
+import 'package:ra_movie/src/domain/model/cinema/cinema_model.dart';
 
 class CinemaCard extends StatelessWidget {
-  const CinemaCard({super.key});
+  final Cinema cinema;
+
+  const CinemaCard({super.key, required this.cinema});
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +28,15 @@ class CinemaCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Row(spacing: 4.w, children: [Icon(Icons.star), Text("4.8")]),
-                  Text("Film Title", style: tx.titleMedium),
-                  Text(
-                    "1.5km - Jl. Sultan Iskandar muda",
-                    style: tx.bodyMedium,
+                  Row(
+                    spacing: 4.w,
+                    children: [
+                      Icon(Icons.star),
+                      Text(cinema.rating.toString()),
+                    ],
                   ),
+                  Text(cinema.name, style: tx.titleMedium),
+                  Text(cinema.address, style: tx.bodyMedium),
                   Spacer(),
                   ElevatedButton.icon(
                     onPressed: () {},
@@ -41,13 +47,18 @@ class CinemaCard extends StatelessWidget {
                 ],
               ),
             ),
-
             Container(
               width: (3 * 36).w,
               height: (4 * 36).h,
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: Colors.grey, // Placeholder color
                 borderRadius: BorderRadius.circular(16.r),
+                image: cinema.pictureUrl.isNotEmpty
+                    ? DecorationImage(
+                        image: NetworkImage(cinema.pictureUrl),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
               ),
             ),
           ],

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ra_movie/src/core/extensions/context_extension.dart';
+import 'package:ra_movie/src/feature/cinema/presentation/cinema_controller.dart';
 import 'package:ra_movie/src/feature/cinema/presentation/widgets/cinema_card.dart';
 
-class CinemaPage extends StatelessWidget {
+class CinemaPage extends ConsumerWidget {
   const CinemaPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cinemasAsync = ref.watch(cinemaControllerProvider);
+
     return Padding(
       padding: EdgeInsets.all(8.dg),
       child: SingleChildScrollView(
@@ -34,14 +38,16 @@ class CinemaPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8.h),
-            Column(
-              spacing: 12.h,
-              children: [
-                CinemaCard(),
-                CinemaCard(),
-                CinemaCard(),
-                CinemaCard(),
-              ],
+            cinemasAsync.when(
+              data: (cinemas) => Column(
+                spacing: 12.h,
+                children: cinemas
+                    .map((cinema) => CinemaCard(cinema: cinema))
+                    .toList(),
+              ),
+              error: (err, stack) =>
+                  Center(child: Text('Error loading cinemas: $err')),
+              loading: () => Center(child: CircularProgressIndicator()),
             ),
           ],
         ),
