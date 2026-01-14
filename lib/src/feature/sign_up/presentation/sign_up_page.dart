@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ra_movie/src/core/extensions/context_extension.dart';
-import 'package:ra_movie/src/core/route/ratix_router.dart';
+
 import 'package:ra_movie/src/feature/sign_up/provider/register_form_provider.dart';
 
 class SignUpPage extends ConsumerWidget {
@@ -45,7 +45,7 @@ class SignUpPage extends ConsumerWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   child: Column(
-                    crossAxisAlignment: .stretch,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
                     spacing: 24.h,
                     children: [

@@ -8,18 +8,18 @@ extension ContextExtension on BuildContext {
   }) {
     final tx = txTheme();
     final c = cs();
-    isSuccess??=true;
+    isSuccess ??= true;
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         content: Column(
-          mainAxisSize: .min,
-          crossAxisAlignment: .start,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(title, style: tx.titleLarge),
             Text(message, style: tx.bodyMedium),
           ],
         ),
-        backgroundColor: isSuccess?c.primary:c.error,
+        backgroundColor: isSuccess ? c.primary : c.error,
       ),
     );
   }

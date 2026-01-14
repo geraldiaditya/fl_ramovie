@@ -37,7 +37,7 @@ class ListMovieGridContent extends ConsumerWidget {
 class _ListMovieCard extends StatelessWidget {
   final MovieModel movie;
 
-  const _ListMovieCard({super.key, required this.movie});
+  const _ListMovieCard({required this.movie});
 
   @override
   Widget build(BuildContext context) {

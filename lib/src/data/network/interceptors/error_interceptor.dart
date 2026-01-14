@@ -5,7 +5,6 @@ class ErrorInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     // Kita ubah error menjadi pesan yang lebih ramah
     String readableMessage = '';
-    int? statusCode = err.response?.statusCode;
 
     switch (err.type) {
       case DioExceptionType.connectionTimeout:
@@ -20,10 +19,12 @@ class ErrorInterceptor extends Interceptor {
         readableMessage = "Permintaan dibatalkan oleh pengguna.";
         break;
       case DioExceptionType.connectionError:
-        readableMessage = "Tidak ada koneksi internet. Periksa wifi/data seluler Anda.";
+        readableMessage =
+            "Tidak ada koneksi internet. Periksa wifi/data seluler Anda.";
         break;
       default:
-        readableMessage = "Terjadi kesalahan yang tidak diketahui. Silakan hubungi admin.";
+        readableMessage =
+            "Terjadi kesalahan yang tidak diketahui. Silakan hubungi admin.";
         break;
     }
 
@@ -49,7 +50,7 @@ class ErrorInterceptor extends Interceptor {
     // Contoh format JSON backend: { "errror": "Email sudah terdaftar" }
     try {
       if (response.data is Map && response.data['error'] != null) {
-        return response.data['error'];
+        return response.data['error'].toString();
       }
     } catch (_) {}
 
