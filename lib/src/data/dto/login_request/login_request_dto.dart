@@ -1,0 +1,16 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'login_request_dto.g.dart';
+
+part 'login_request_dto.freezed.dart';
+
+@freezed
+abstract class LoginRequestDto with _$LoginRequestDto {
+  const factory LoginRequestDto({
+    @Default('') String email,
+    @Default('') String password,
+  }) = _LoginRequestDto;
+
+  factory LoginRequestDto.fromJson(Map<String, dynamic> json) =>
+      _$LoginRequestDtoFromJson(json);
+}
