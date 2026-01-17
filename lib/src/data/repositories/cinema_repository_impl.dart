@@ -9,8 +9,14 @@ class CinemaRepositoryImpl implements CinemaRepository {
   CinemaRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<List<Cinema>> getCinemas({String? city}) async {
-    final dtos = await _remoteDataSource.getCinemas(city: city);
+  Future<List<Cinema>> getCinemas({String? city, String? brand}) async {
+    final dtos = await _remoteDataSource.getCinemas(city: city, brand: brand);
     return dtos.map((e) => e.toDomain()).toList();
+  }
+
+  @override
+  Future<List<String>> getBrands() async {
+    final response = await _remoteDataSource.getBrands();
+    return response.brands;
   }
 }

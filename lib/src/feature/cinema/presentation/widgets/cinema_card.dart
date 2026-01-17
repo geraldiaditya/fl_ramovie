@@ -31,7 +31,7 @@ class CinemaCard extends StatelessWidget {
                   Row(
                     spacing: 4.w,
                     children: [
-                      Icon(Icons.star),
+                      Icon(cinema.rating > 4.0 ? Icons.star : Icons.star_half),
                       Text(cinema.rating.toString()),
                     ],
                   ),
@@ -43,13 +43,19 @@ class CinemaCard extends StatelessWidget {
                     icon: Icon(Icons.arrow_forward),
                     iconAlignment: IconAlignment.end,
                     label: Text("Lihat Jadwal"),
+                    style: ElevatedButton.styleFrom(
+                      textStyle: tx.titleSmall?.copyWith(letterSpacing: 1.2),
+                      backgroundColor: cs.secondary,
+                      foregroundColor: cs.onSecondary,
+                      padding: .all(8),
+                    ),
                   ),
                 ],
               ),
             ),
             Container(
-              width: (3 * 36).w,
-              height: (4 * 36).h,
+              width: (3 * 32).w,
+              height: (4 * 32).h,
               decoration: BoxDecoration(
                 color: Colors.grey, // Placeholder color
                 borderRadius: BorderRadius.circular(16.r),

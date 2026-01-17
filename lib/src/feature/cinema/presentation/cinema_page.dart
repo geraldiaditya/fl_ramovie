@@ -23,18 +23,48 @@ class CinemaPage extends ConsumerWidget {
             SingleChildScrollView(
               padding: EdgeInsets.only(top: 12.h),
               scrollDirection: Axis.horizontal,
-              child: Row(
-                spacing: 8.w,
-                children: [
-                  _buildFilterChips(
-                    context,
-                    icon: Icons.near_me,
-                    text: "Terdekat",
-                  ),
-                  _buildFilterChips(context, text: "XXI"),
-                  _buildFilterChips(context, text: "CGV"),
-                  _buildFilterChips(context, text: "Cinepolis"),
-                ],
+              child: Consumer(
+                builder: (context, ref, child) {
+                  final brandsAsync = ref.watch(cinemaBrandControllerProvider);
+                  final selectedBrand = ref.watch(selectedBrandProvider);
+                  return Row(
+                    spacing: 8.w,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          ref.read(selectedBrandProvider.notifier).set(null);
+                          ref.read(cinemaControllerProvider.notifier).filter();
+                        },
+                        child: _buildFilterChips(
+                          context,
+                          icon: Icons.near_me,
+                          text: "Semua",
+                          isSelected: selectedBrand == null,
+                        ),
+                      ),
+                      ...brandsAsync.maybeWhen(
+                        data: (brands) => brands.map(
+                          (brand) => GestureDetector(
+                            onTap: () {
+                              ref
+                                  .read(selectedBrandProvider.notifier)
+                                  .set(brand);
+                              ref
+                                  .read(cinemaControllerProvider.notifier)
+                                  .filter(brand: brand);
+                            },
+                            child: _buildFilterChips(
+                              context,
+                              text: brand,
+                              isSelected: selectedBrand == brand,
+                            ),
+                          ),
+                        ),
+                        orElse: () => [],
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
             SizedBox(height: 8.h),
@@ -59,27 +89,38 @@ class CinemaPage extends ConsumerWidget {
     BuildContext context, {
     IconData? icon,
     required String text,
+    bool isSelected = false,
   }) {
     final cs = context.cs();
+    final tx = context.txTheme();
     return Container(
       height: 36.h,
       padding: EdgeInsets.symmetric(horizontal: 16.dg),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
-        color: cs.surfaceContainer,
+        color: isSelected ? cs.primary : cs.surfaceContainer,
       ),
       child: Row(
         children: [
           if (icon != null) ...[
-            Icon(icon, color: cs.primary, size: 12.dg),
+            Icon(
+              icon,
+              color: isSelected ? cs.onPrimary : cs.primary,
+              size: 12.dg,
+            ),
             SizedBox(width: 8.w),
           ],
-          Text(text, style: context.txTheme().labelLarge),
+          Text(
+            text,
+            style: tx.labelLarge?.copyWith(
+              color: isSelected ? cs.onPrimary : cs.onSurface,
+            ),
+          ),
           if (icon != null) ...[
             SizedBox(width: 4.w),
             Icon(
               Icons.keyboard_arrow_down_rounded,
-              color: cs.primary,
+              color: isSelected ? cs.onPrimary : cs.primary,
               size: 12.dg,
             ),
           ],

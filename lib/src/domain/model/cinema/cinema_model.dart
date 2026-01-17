@@ -8,6 +8,7 @@ abstract class Cinema with _$Cinema {
   const factory Cinema({
     @Default(0) int id,
     @Default('') String name,
+    @Default('') String brand,
     @Default('') String city,
     @Default('') String address,
     @Default(0.0) double rating,

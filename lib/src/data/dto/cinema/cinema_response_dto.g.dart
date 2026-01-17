@@ -10,6 +10,7 @@ _CinemaResponseDto _$CinemaResponseDtoFromJson(Map<String, dynamic> json) =>
     _CinemaResponseDto(
       id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
+      brand: json['brand'] as String? ?? '',
       city: json['city'] as String? ?? '',
       address: json['address'] as String? ?? '',
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
@@ -22,6 +23,7 @@ Map<String, dynamic> _$CinemaResponseDtoToJson(_CinemaResponseDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'brand': instance.brand,
       'city': instance.city,
       'address': instance.address,
       'rating': instance.rating,

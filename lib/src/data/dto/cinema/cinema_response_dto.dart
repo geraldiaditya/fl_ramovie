@@ -9,6 +9,7 @@ abstract class CinemaResponseDto with _$CinemaResponseDto {
   const factory CinemaResponseDto({
     @Default(0) int id,
     @Default('') String name,
+    @Default('') String brand,
     @Default('') String city,
     @Default('') String address,
     @Default(0.0) double rating,
@@ -26,6 +27,7 @@ extension CinemaResponseDtoX on CinemaResponseDto {
     return Cinema(
       id: id,
       name: name,
+      brand: brand,
       city: city,
       address: address,
       rating: rating,

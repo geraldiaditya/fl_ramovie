@@ -9,6 +9,7 @@ part of 'cinema_model.dart';
 _Cinema _$CinemaFromJson(Map<String, dynamic> json) => _Cinema(
   id: (json['id'] as num?)?.toInt() ?? 0,
   name: json['name'] as String? ?? '',
+  brand: json['brand'] as String? ?? '',
   city: json['city'] as String? ?? '',
   address: json['address'] as String? ?? '',
   rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
@@ -20,6 +21,7 @@ _Cinema _$CinemaFromJson(Map<String, dynamic> json) => _Cinema(
 Map<String, dynamic> _$CinemaToJson(_Cinema instance) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
+  'brand': instance.brand,
   'city': instance.city,
   'address': instance.address,
   'rating': instance.rating,
