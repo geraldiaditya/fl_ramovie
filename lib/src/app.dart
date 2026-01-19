@@ -15,7 +15,6 @@ class RaMovieApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
     return ScreenUtilInit(
-      splitScreenMode: false,
       minTextAdapt: true,
       builder: (context, child) {
         final rTheme = RatixTheme.initialized();

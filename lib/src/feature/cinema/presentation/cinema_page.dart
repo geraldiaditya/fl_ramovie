@@ -3,13 +3,55 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ra_movie/src/core/extensions/context_extension.dart';
 import 'package:ra_movie/src/feature/cinema/presentation/cinema_controller.dart';
+import 'package:ra_movie/src/feature/cinema/presentation/location_controller.dart';
 import 'package:ra_movie/src/feature/cinema/presentation/widgets/cinema_card.dart';
 
-class CinemaPage extends ConsumerWidget {
+class CinemaPage extends ConsumerStatefulWidget {
   const CinemaPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CinemaPage> createState() => _CinemaPageState();
+}
+
+class _CinemaPageState extends ConsumerState<CinemaPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _fetchNearestCinemas();
+    });
+  }
+
+  Future<void> _fetchNearestCinemas() async {
+    ref.read(selectedBrandProvider.notifier).set("Nearest");
+    try {
+      ref.read(cinemaControllerProvider.notifier).setLoading();
+      await ref.read(locationControllerProvider.notifier).requestLocation();
+      final locationState = ref.read(locationControllerProvider);
+
+      if (locationState.hasValue && locationState.value != null) {
+        final pos = locationState.value!;
+        await ref
+            .read(cinemaControllerProvider.notifier)
+            .filter(lat: pos.latitude, lon: pos.longitude, radius: 30);
+      } else if (locationState.hasError) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(locationState.error.toString())),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final cinemasAsync = ref.watch(cinemaControllerProvider);
 
     return Padding(
@@ -31,15 +73,12 @@ class CinemaPage extends ConsumerWidget {
                     spacing: 8.w,
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          ref.read(selectedBrandProvider.notifier).set(null);
-                          ref.read(cinemaControllerProvider.notifier).filter();
-                        },
+                        onTap: _fetchNearestCinemas,
                         child: _buildFilterChips(
                           context,
                           icon: Icons.near_me,
-                          text: "Semua",
-                          isSelected: selectedBrand == null,
+                          text: "Terdekat",
+                          isSelected: selectedBrand == "Nearest",
                         ),
                       ),
                       ...brandsAsync.maybeWhen(
@@ -49,9 +88,17 @@ class CinemaPage extends ConsumerWidget {
                               ref
                                   .read(selectedBrandProvider.notifier)
                                   .set(brand);
+                              final locationState =
+                                  ref.read(locationControllerProvider);
+                              double? lat, lon;
+                              if (locationState.hasValue &&
+                                  locationState.value != null) {
+                                lat = locationState.value!.latitude;
+                                lon = locationState.value!.longitude;
+                              }
                               ref
                                   .read(cinemaControllerProvider.notifier)
-                                  .filter(brand: brand);
+                                  .filter(brand: brand, lat: lat, lon: lon);
                             },
                             child: _buildFilterChips(
                               context,
@@ -69,12 +116,39 @@ class CinemaPage extends ConsumerWidget {
             ),
             SizedBox(height: 8.h),
             cinemasAsync.when(
-              data: (cinemas) => Column(
-                spacing: 12.h,
-                children: cinemas
-                    .map((cinema) => CinemaCard(cinema: cinema))
-                    .toList(),
-              ),
+              data: (cinemas) {
+                if (cinemas.isEmpty) {
+                  return Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 100.h),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.movie_filter_outlined,
+                            size: 48.dg,
+                            color: context.secondary(),
+                          ),
+                          SizedBox(height: 16.h),
+                          Text(
+                            "Belum ada bioskop ditemukan di area ini",
+                            style: context.txTheme().titleMedium?.copyWith(
+                              color: context.secondary(),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return Column(
+                  spacing: 12.h,
+                  children: cinemas
+                      .map((cinema) => CinemaCard(cinema: cinema))
+                      .toList(),
+                );
+              },
               error: (err, stack) =>
                   Center(child: Text('Error loading cinemas: $err')),
               loading: () => Center(child: CircularProgressIndicator()),
@@ -87,8 +161,8 @@ class CinemaPage extends ConsumerWidget {
 
   Container _buildFilterChips(
     BuildContext context, {
-    IconData? icon,
     required String text,
+    IconData? icon,
     bool isSelected = false,
   }) {
     final cs = context.cs();
@@ -134,19 +208,7 @@ class CinemaPage extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Lokasi Anda", style: tx.titleSmall),
-            Row(
-              children: [
-                Icon(Icons.location_on_outlined, size: 12.dg),
-                Text("Jakarta Selatan", style: tx.titleMedium),
-                Icon(Icons.keyboard_arrow_down_rounded, size: 16.dg),
-              ],
-            ),
-          ],
-        ),
+        Spacer(),
         IconButton(
           onPressed: () {},
           icon: Icon(Icons.notifications_none_rounded),
@@ -170,6 +232,20 @@ class CinemaPage extends ConsumerWidget {
         fillColor: context.surfaceContainer(),
         filled: true,
       ),
+      onSubmitted: (value) {
+        ref.read(selectedBrandProvider.notifier).set(null);
+        final locationState = ref.read(locationControllerProvider);
+        double? lat, lon;
+        if (locationState.hasValue && locationState.value != null) {
+          lat = locationState.value!.latitude;
+          lon = locationState.value!.longitude;
+        }
+        ref.read(cinemaControllerProvider.notifier).filter(
+              name: value,
+              lat: lat,
+              lon: lon,
+            );
+      },
     );
   }
 }

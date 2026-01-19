@@ -11,9 +11,13 @@ abstract class CinemaRemoteDataSource {
       _CinemaRemoteDataSource;
 
   @GET('/cinemas')
-  Future<List<CinemaResponseDto>> getCinemas({
-    @Query('city') String? city,
+  Future<List<CinemaResponseDto>?> getCinemas({
+    @Query('name') String? name,
     @Query('brand') String? brand,
+    @Query('city') String? city,
+    @Query('lat') double? lat,
+    @Query('lon') double? lon,
+    @Query('radius') double? radius,
   });
 
   @GET('/cinemas/brands')

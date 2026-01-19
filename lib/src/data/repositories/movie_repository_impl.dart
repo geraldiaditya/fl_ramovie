@@ -8,9 +8,9 @@ import 'package:ra_movie/src/domain/model/movie/movie_model.dart';
 import 'package:ra_movie/src/domain/repositories/movie_repository.dart';
 
 class MovieRepositoryImpl implements MovieRepository {
-  final MovieRemoteDataSource remote;
 
   MovieRepositoryImpl(this.remote);
+  final MovieRemoteDataSource remote;
 
   @override
   Future<List<MovieCategory>> getListMovieCategories() async {

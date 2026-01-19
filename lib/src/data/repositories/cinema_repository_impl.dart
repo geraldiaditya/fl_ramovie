@@ -4,14 +4,28 @@ import 'package:ra_movie/src/domain/model/cinema/cinema_model.dart';
 import 'package:ra_movie/src/domain/repositories/cinema_repository.dart';
 
 class CinemaRepositoryImpl implements CinemaRepository {
-  final CinemaRemoteDataSource _remoteDataSource;
 
   CinemaRepositoryImpl(this._remoteDataSource);
+  final CinemaRemoteDataSource _remoteDataSource;
 
   @override
-  Future<List<Cinema>> getCinemas({String? city, String? brand}) async {
-    final dtos = await _remoteDataSource.getCinemas(city: city, brand: brand);
-    return dtos.map((e) => e.toDomain()).toList();
+  Future<List<Cinema>> getCinemas({
+    String? name,
+    String? city,
+    String? brand,
+    double? lat,
+    double? lon,
+    double? radius,
+  }) async {
+    final dtos = await _remoteDataSource.getCinemas(
+      name: name,
+      city: city,
+      brand: brand,
+      lat: lat,
+      lon: lon,
+      radius: radius,
+    );
+    return (dtos ?? []).map((dto) => dto.toDomain()).toList();
   }
 
   @override

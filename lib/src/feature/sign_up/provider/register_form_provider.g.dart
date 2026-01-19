@@ -33,7 +33,7 @@ final class RegisterFormProvider
   RegisterForm create() => RegisterForm();
 }
 
-String _$registerFormHash() => r'2e2b625fae27a4885dd86cce8ac12685d92eded8';
+String _$registerFormHash() => r'8d2fa44cb5bbcbc85f3577eae6e8a70d2c1d79fb';
 
 abstract class _$RegisterForm extends $AsyncNotifier<bool> {
   FutureOr<bool> build();

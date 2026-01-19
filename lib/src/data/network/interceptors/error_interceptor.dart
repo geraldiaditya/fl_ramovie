@@ -11,21 +11,16 @@ class ErrorInterceptor extends Interceptor {
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
         readableMessage = "Koneksi habis waktu (RTO). Silakan coba lagi.";
-        break;
       case DioExceptionType.badResponse:
         readableMessage = _handleBadResponse(err.response);
-        break;
       case DioExceptionType.cancel:
         readableMessage = "Permintaan dibatalkan oleh pengguna.";
-        break;
       case DioExceptionType.connectionError:
         readableMessage =
             "Tidak ada koneksi internet. Periksa wifi/data seluler Anda.";
-        break;
       default:
         readableMessage =
             "Terjadi kesalahan yang tidak diketahui. Silakan hubungi admin.";
-        break;
     }
 
     // Kita ganti error asli dengan error custom yang berisi pesan readable

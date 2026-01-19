@@ -4,11 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:ra_movie/src/core/constants/menu_dashboard.dart';
 
 class DashboardShell extends ConsumerWidget {
+
+  const DashboardShell({required this.child, super.key});
   final Widget child;
 
   List<MenuDashboard> get menus => MenuDashboard.values;
-
-  const DashboardShell({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

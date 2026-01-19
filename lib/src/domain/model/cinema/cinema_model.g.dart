@@ -16,6 +16,7 @@ _Cinema _$CinemaFromJson(Map<String, dynamic> json) => _Cinema(
   lat: (json['lat'] as num?)?.toDouble() ?? 0.0,
   lon: (json['lon'] as num?)?.toDouble() ?? 0.0,
   pictureUrl: json['picture_url'] as String? ?? '',
+  distance: (json['distance'] as num?)?.toDouble(),
 );
 
 Map<String, dynamic> _$CinemaToJson(_Cinema instance) => <String, dynamic>{
@@ -28,4 +29,5 @@ Map<String, dynamic> _$CinemaToJson(_Cinema instance) => <String, dynamic>{
   'lat': instance.lat,
   'lon': instance.lon,
   'picture_url': instance.pictureUrl,
+  'distance': instance.distance,
 };

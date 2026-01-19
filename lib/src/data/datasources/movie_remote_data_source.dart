@@ -6,9 +6,9 @@ import 'package:ra_movie/src/data/dto/pagination_result/pagination_result.dart';
 import 'package:ra_movie/src/data/network/retrofit/api_client.dart';
 
 class MovieRemoteDataSource {
-  final ApiClient api;
 
   MovieRemoteDataSource(this.api);
+  final ApiClient api;
 
   Future<List<MovieCategoryDto>> getListMovieCategories() {
     return api.getMovieCategories();

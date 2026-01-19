@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ra_movie/src/domain/model/cinema/cinema_model.dart';
 import 'package:ra_movie/src/provider/repositories/cinema/cinema_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -9,19 +8,32 @@ part 'cinema_controller.g.dart';
 class CinemaController extends _$CinemaController {
   @override
   FutureOr<List<Cinema>> build() async {
-    return _fetchCinemas();
+    return [];
   }
 
-  Future<List<Cinema>> _fetchCinemas() async {
-    final repository = ref.read(cinemaRepositoryProvider);
-    return repository.getCinemas();
+  void setLoading(){
+    state= const AsyncValue.loading();
   }
 
-  Future<void> filter({String? city, String? brand}) async {
+  Future<void> filter({
+    String? name,
+    String? city,
+    String? brand,
+    double? lat,
+    double? lon,
+    double? radius,
+  }) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       final repository = ref.read(cinemaRepositoryProvider);
-      return repository.getCinemas(city: city, brand: brand);
+      return repository.getCinemas(
+        name: name,
+        city: city,
+        brand: brand,
+        lat: lat,
+        lon: lon,
+        radius: radius,
+      );
     });
   }
 }

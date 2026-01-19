@@ -8,6 +8,7 @@ part of 'cinema_response_dto.dart';
 
 _CinemaResponseDto _$CinemaResponseDtoFromJson(Map<String, dynamic> json) =>
     _CinemaResponseDto(
+      pictureUrl: json['picture_url'] as String,
       id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
       brand: json['brand'] as String? ?? '',
@@ -16,11 +17,12 @@ _CinemaResponseDto _$CinemaResponseDtoFromJson(Map<String, dynamic> json) =>
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       lat: (json['lat'] as num?)?.toDouble() ?? 0.0,
       lon: (json['lon'] as num?)?.toDouble() ?? 0.0,
-      pictureUrl: json['picture_url'] as String? ?? '',
+      distanceKm: (json['distance_km'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$CinemaResponseDtoToJson(_CinemaResponseDto instance) =>
     <String, dynamic>{
+      'picture_url': instance.pictureUrl,
       'id': instance.id,
       'name': instance.name,
       'brand': instance.brand,
@@ -29,5 +31,5 @@ Map<String, dynamic> _$CinemaResponseDtoToJson(_CinemaResponseDto instance) =>
       'rating': instance.rating,
       'lat': instance.lat,
       'lon': instance.lon,
-      'picture_url': instance.pictureUrl,
+      'distance_km': instance.distanceKm,
     };

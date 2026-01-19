@@ -4,9 +4,9 @@ import 'package:ra_movie/src/core/extensions/context_extension.dart';
 import 'package:ra_movie/src/domain/model/cinema/cinema_model.dart';
 
 class CinemaCard extends StatelessWidget {
-  final Cinema cinema;
 
-  const CinemaCard({super.key, required this.cinema});
+  const CinemaCard({required this.cinema, super.key});
+  final Cinema cinema;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +26,22 @@ class CinemaCard extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Row(
                     spacing: 4.w,
                     children: [
                       Icon(cinema.rating > 4.0 ? Icons.star : Icons.star_half),
                       Text(cinema.rating.toString()),
+                      if (cinema.distance != null && cinema.distance! > 0) ...[
+                        Text("•"),
+                        Text(
+                          "${cinema.distance!.toStringAsFixed(1)} km",
+                          style: tx.bodyMedium?.copyWith(
+                            color: cs.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                   Text(cinema.name, style: tx.titleMedium),

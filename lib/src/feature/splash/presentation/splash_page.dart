@@ -9,9 +9,8 @@ class SplashPage extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Center(child: CircularProgressIndicator())],
+          children: const [Center(child: CircularProgressIndicator())],
         ),
       ),
     );

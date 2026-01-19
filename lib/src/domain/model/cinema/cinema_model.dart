@@ -15,6 +15,7 @@ abstract class Cinema with _$Cinema {
     @Default(0.0) double lat,
     @Default(0.0) double lon,
     @JsonKey(name: 'picture_url') @Default('') String pictureUrl,
+    double? distance,
   }) = _Cinema;
 
   factory Cinema.fromJson(Map<String, dynamic> json) => _$CinemaFromJson(json);

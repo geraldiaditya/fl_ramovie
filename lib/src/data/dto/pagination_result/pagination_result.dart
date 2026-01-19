@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:ra_movie/src/data/dto/movie/movie_dto.dart';
 
 part 'pagination_result.g.dart';
 
