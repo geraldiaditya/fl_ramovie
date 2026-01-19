@@ -26,7 +26,7 @@ class RegisterForm extends _$RegisterForm {
   }
 
   Future<void> submit() async {
-    final isValid = (formKey.currentState?.validate() ?? false);
+    final isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) {
       state = AsyncValue.error("Something Wrong", StackTrace.current);
       return;

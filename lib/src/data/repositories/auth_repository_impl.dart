@@ -2,11 +2,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ra_movie/src/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final FlutterSecureStorage _secureStorage;
 
   AuthRepositoryImpl(this._secureStorage);
+  final FlutterSecureStorage _secureStorage;
 
-  static final String _keyToken = 'token';
+  static const String _keyToken = 'token';
 
   @override
   Future<void> saveToken(String token) {

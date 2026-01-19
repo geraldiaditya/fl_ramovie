@@ -33,7 +33,7 @@ final class CinemaControllerProvider
   CinemaController create() => CinemaController();
 }
 
-String _$cinemaControllerHash() => r'003045943641d9699c6530890acd4e389b935c2e';
+String _$cinemaControllerHash() => r'a6a4030fe96beaf1d1aba812e1bb13561da3dd09';
 
 abstract class _$CinemaController extends $AsyncNotifier<List<Cinema>> {
   FutureOr<List<Cinema>> build();

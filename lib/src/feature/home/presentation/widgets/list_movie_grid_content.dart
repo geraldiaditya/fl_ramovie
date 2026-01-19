@@ -35,15 +35,14 @@ class ListMovieGridContent extends ConsumerWidget {
 }
 
 class _ListMovieCard extends StatelessWidget {
-  final MovieModel movie;
 
   const _ListMovieCard({required this.movie});
+  final MovieModel movie;
 
   @override
   Widget build(BuildContext context) {
     final tx = context.txTheme();
     return Column(
-      mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(

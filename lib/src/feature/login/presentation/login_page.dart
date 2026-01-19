@@ -46,8 +46,6 @@ class LoginPage extends ConsumerWidget {
                       SizedBox(
                         width: size.width,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(
                               height: size.height * 0.2,

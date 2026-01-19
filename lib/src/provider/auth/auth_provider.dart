@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ra_movie/src/provider/repositories/auth/auth_repository_provider/auth_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

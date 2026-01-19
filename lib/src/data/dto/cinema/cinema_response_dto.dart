@@ -7,7 +7,7 @@ part 'cinema_response_dto.g.dart';
 @freezed
 abstract class CinemaResponseDto with _$CinemaResponseDto {
   const factory CinemaResponseDto({
-    @Default(0) int id,
+    @JsonKey(name: 'picture_url') required String pictureUrl, @Default(0) int id,
     @Default('') String name,
     @Default('') String brand,
     @Default('') String city,
@@ -15,7 +15,7 @@ abstract class CinemaResponseDto with _$CinemaResponseDto {
     @Default(0.0) double rating,
     @Default(0.0) double lat,
     @Default(0.0) double lon,
-    @JsonKey(name: 'picture_url') @Default('') String pictureUrl,
+    @JsonKey(name: 'distance_km') double? distanceKm,
   }) = _CinemaResponseDto;
 
   factory CinemaResponseDto.fromJson(Map<String, dynamic> json) =>
@@ -34,6 +34,7 @@ extension CinemaResponseDtoX on CinemaResponseDto {
       lat: lat,
       lon: lon,
       pictureUrl: pictureUrl,
+      distance: distanceKm,
     );
   }
 }

@@ -1,3 +1,3 @@
 
-double kDefaultBorderRadius=16.0;
-double kDefaultPadding=8.0;
+double kDefaultBorderRadius=16;
+double kDefaultPadding=8;

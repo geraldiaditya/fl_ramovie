@@ -31,13 +31,13 @@ final TextTheme _raTextTheme = TextTheme(
 );
 
 class RatixTheme {
-  final TextTheme textTheme;
 
   const RatixTheme._(this.textTheme);
 
   factory RatixTheme.initialized() {
     return RatixTheme._(_raTextTheme);
   }
+  final TextTheme textTheme;
 
   static ColorScheme lightScheme() {
     return const ColorScheme(
@@ -415,13 +415,6 @@ class RatixTheme {
 }
 
 class ExtendedColor {
-  final Color seed, value;
-  final ColorFamily light;
-  final ColorFamily lightHighContrast;
-  final ColorFamily lightMediumContrast;
-  final ColorFamily dark;
-  final ColorFamily darkHighContrast;
-  final ColorFamily darkMediumContrast;
 
   const ExtendedColor({
     required this.seed,
@@ -433,6 +426,14 @@ class ExtendedColor {
     required this.darkHighContrast,
     required this.darkMediumContrast,
   });
+  final Color seed;
+  final Color value;
+  final ColorFamily light;
+  final ColorFamily lightHighContrast;
+  final ColorFamily lightMediumContrast;
+  final ColorFamily dark;
+  final ColorFamily darkHighContrast;
+  final ColorFamily darkMediumContrast;
 }
 
 class ColorFamily {

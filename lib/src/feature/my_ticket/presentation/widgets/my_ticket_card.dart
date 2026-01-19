@@ -27,7 +27,6 @@ class MyTicketCard extends StatelessWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       "Film Name",
@@ -45,7 +44,7 @@ class MyTicketCard extends StatelessWidget {
             ),
             Divider(),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

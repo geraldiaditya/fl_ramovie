@@ -19,10 +19,10 @@ class _CarouselHomeContentState extends ConsumerState<CarouselHomeContent> {
   int _currentIndex = 0;
 
   List<Widget> bannerWidget(List<BannerModel> data) {
-    Widget _widget(BannerModel value) {
+    Widget widget(BannerModel value) {
       return Container(child: Text(value.title),);
     }
-    return data.map((e) => _widget(e),).toList();
+    return data.map(widget,).toList();
   }
 
   @override
@@ -41,7 +41,6 @@ class _CarouselHomeContentState extends ConsumerState<CarouselHomeContent> {
             enlargeCenterPage: true,
             enableInfiniteScroll: false,
             viewportFraction: 1,
-            aspectRatio: 16 / 9,
             onPageChanged: (index, reason) {
               setState(() {
                 _currentIndex = index;

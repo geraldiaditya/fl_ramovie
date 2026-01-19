@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:ra_movie/src/data/network/interceptors/error_interceptor.dart';
-import 'env_config.dart';
-import 'interceptors/auth_interceptor.dart';
+import 'package:ra_movie/src/data/network/env_config.dart';
+import 'package:ra_movie/src/data/network/interceptors/auth_interceptor.dart';
 
 Dio createDio() {
   final dio = Dio(

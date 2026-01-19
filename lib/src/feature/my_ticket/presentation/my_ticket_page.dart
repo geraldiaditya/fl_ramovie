@@ -30,7 +30,7 @@ class MyTicketPage extends StatelessWidget {
               label: Text("Riwayat Tiket"),
             ),
           ],
-          selected: <TicketTab>{TicketTab.active},
+          selected: const <TicketTab>{TicketTab.active},
           onSelectionChanged: (Set<TicketTab> value) {},
           style: SegmentedButton.styleFrom(side: BorderSide.none),
         ),
